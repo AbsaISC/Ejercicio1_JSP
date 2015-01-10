@@ -4,6 +4,8 @@
     Author     : absalom
 --%>
 
+<%@page import="DTO.Alumno"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,19 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
+        <%
+            
+            Alumno a = (Alumno) session.getAttribute("dto");
+            if (a == null) {
+                response.sendRedirect("index.jsp?err=Necesita inicio de sesión");
+                return;
+            }
+
+            out.println("Bienvenido " + a.getNombre());
+        %>
+        <br>
+    <form action="cerrarSesion.jsp" method="post" name="frmcs">
+        <input type="submit" value="Cerrar Sesión" >
+    </form>
+</body>
 </html>

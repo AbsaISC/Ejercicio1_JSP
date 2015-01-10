@@ -13,30 +13,26 @@
     </head>
     <body>
         <%
-             if(request.getParameter("err")!=null){
-                 out.println(request.getParameter("err"));
-             }
+            if(session.getAttribute("dto")!=null){
+                response.sendRedirect("principal.jsp");
+                return;
+            }
+            if (request.getParameter("err") != null) {
+                out.println(request.getParameter("err"));
+            }
         %>
         <div>
-            <fieldset>
-                <legend>Login</legend>
-                <form method="post" name="frmLogin" action="login.jsp">
+           
+                
+                <form method="post" name="frmLo" action="login.jsp">
                     <table>
                         <tr>
-                            <td>
-                                <label >Usuario</label>
-                            </td>
-                            <td>
-                                <input type="text" name="txtUsuario" id="txtUsuario"  placeholder="introduzca usuario">
-                            </td>
+                            <td><label>Usuario:</label></td>
+                            <td><input type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" value=<%=(request.getParameter("usuario") != null) ? request.getParameter("usuario") : ""%>></td>
                         </tr>
                         <tr>
-                            <td>
-                                <label >Clave</label>
-                            </td>
-                            <td>
-                                <input type="password" name="txtPass" id="txtPass" placeholder="introduzca clave" value="">
-                            </td>
+                            <td><label>Clave:</label></td>
+                            <td><input type="password" name="txtClave" id="txtClave" placeholder="clave" value=""></td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -53,7 +49,7 @@
                         </tr>
                     </table>
                 </form>
-            </fieldset>
+           
         </div>
     </body>
 </html>

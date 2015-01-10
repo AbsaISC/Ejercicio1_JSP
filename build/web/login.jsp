@@ -3,6 +3,7 @@
     Created on : Jan 8, 2015, 1:39:27 PM
     Author     : absalom
 --%>
+<%@page import="Utility.Security_MD5"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.sql.SQLException"%>
@@ -21,8 +22,9 @@
         String pass=request.getParameter("txtClave");
         Alumno dto=null;
         AlumnoDAO dao=new AlumnoDAO();
+        Security_MD5 md5=new Security_MD5();
         try{
-        dto=dao.login(user, pass);
+        dto=dao.login(user, md5.encriptarMD5(pass));
         } catch (SQLException ex) {
             //Logger.getLogger(CarreraDAO.class.getName()).log(Level.SEVERE, null, ex);
              System.out.println(ex);
@@ -32,7 +34,7 @@
         }
         if(dto!=null){
             session=request.getSession();
-            session.setAttribute("alumno", dto);
+            session.setAttribute("dto", dto);
             response.sendRedirect("principal.jsp");
         }else{
             response.sendRedirect("index.jsp?err="+"Usuario y clave no encontrados intente de nuevo");

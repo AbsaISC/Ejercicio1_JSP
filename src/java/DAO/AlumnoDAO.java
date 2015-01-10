@@ -46,7 +46,7 @@ public class AlumnoDAO {
             = "{call eliminarAlumno(?)}";
 
     private static final String findByUserPass
-            = "{call bucaClaveUsuario(?,?)}";
+            = "{call buscaClaveUsuario(?,?)}";
 
     /**
      * Create a new record in Database.
@@ -60,7 +60,6 @@ public class AlumnoDAO {
         CallableStatement cs = null;
         try {
             cs = conn.prepareCall(SQL_INSERT);
-            //cs.setInt(1, bean.getIdalumno());
             cs.setString(1, bean.getNombre());
             cs.setString(2, bean.getPaterno());
             cs.setString(3, bean.getMaterno());
@@ -73,7 +72,7 @@ public class AlumnoDAO {
             } else {
                 cs.setNull(8, Types.DATE);
             }
-            cs.executeUpdate();
+            cs.executeQuery();
         } finally {
             close(cs);
             closeConn();
@@ -267,7 +266,7 @@ public class AlumnoDAO {
     public void openConn() throws ClassNotFoundException, SQLException {
         conn = null;
         Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Ejer1a", "root", "root");
     }
 
 }

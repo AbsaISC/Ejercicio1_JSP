@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td><label>Clave:</label></td>
-                    <td><input type="password" name="txtClave1" id="txtClave" placeholder="clave" value=""></td>
+                    <td><input type="password" name="txtClave" id="txtClave" placeholder="clave" value=""></td>
                 </tr>
                 <tr>
                     <td><label>Confirma Clave:</label></td>
