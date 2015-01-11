@@ -3,6 +3,7 @@
     Created on : Jan 9, 2015, 12:14:17 AM
     Author     : absalom
 --%>
+<%@page errorPage="errorException.jsp?de=registro.jsp" %>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.sql.SQLException"%>
@@ -18,7 +19,7 @@
         <title>Registro</title>
     </head>
     <body>
-        <%!
+        <%!            
             String nombre = null;
             String paterno = null;
             String materno = null;
@@ -28,7 +29,7 @@
             String clave = null;
             String cclave = null;
             String fecha = null;
-
+            
             public String validaCampos() {
                 String res = null;
                 if (nombre == null || nombre.equalsIgnoreCase("")) {
@@ -72,7 +73,7 @@
             String regreso = "&nombre=" + nombre + "&paterno=" + paterno + "&materno=" + materno + "&sexo=" + sexo + "&edad=" + edad
                     + "&usuario=" + usuario + "&fecha=" + fecha;
             String res = validaCampos();
-
+            
             if (res != null) {
                 response.sendRedirect("registroView.jsp?error=Falta llenar los campos: \n" + res + regreso);
                 return;
@@ -93,21 +94,18 @@
             dto.setClave(smd5);
             //dto.setFechanac(Date.valueOf(fecha));
             out.println(dto.toString());
-
+            
             AlumnoDAO dao = new AlumnoDAO();
-
-            try {
-                dao.create(dto);
-            } catch (SQLException ex) {
-                Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                // System.out.println(ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                //System.out.println(ex);
+            dao.create(dto);
+            session = request.getSession(false);
+            if (session == null) {
+                session=request.getSession();
+                session.setAttribute("dto", dto);
+                response.sendRedirect("principal.jsp");
+            } else {
+                response.sendRedirect("principal.jsp?exito=Registro realizado con éxito");
             }
-            session = request.getSession();
-            session.setAttribute("dto", dto);
-            response.sendRedirect("principal.jsp");
+
         %>
 
     </body>

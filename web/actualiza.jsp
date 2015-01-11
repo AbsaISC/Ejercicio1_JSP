@@ -1,25 +1,22 @@
 <%-- 
-    Document   : registro
-    Created on : Jan 9, 2015, 12:14:17 AM
+    Document   : actualiza
+    Created on : Jan 11, 2015, 2:16:12 AM
     Author     : absalom
 --%>
-<%@page errorPage="errorException.jsp?de=registro.jsp" %>
-<%@page import="java.util.logging.Logger"%>
-<%@page import="java.util.logging.Level"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.Date"%>
-<%@page import="Utility.Security_MD5"%>
-<%@page import="DTO.Alumno"%>
+<%@page errorPage="errorException.jsp?de=actualiza.jsp"%>
 <%@page import="DAO.AlumnoDAO"%>
+<%@page import="DTO.Alumno"%>
+<%@page import="Utility.Security_MD5"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registro</title>
+        <title>actualiza</title>
     </head>
     <body>
-        <%!            
+        <%!
+            String id=null;
             String nombre = null;
             String paterno = null;
             String materno = null;
@@ -29,7 +26,7 @@
             String clave = null;
             String cclave = null;
             String fecha = null;
-            
+
             public String validaCampos() {
                 String res = null;
                 if (nombre == null || nombre.equalsIgnoreCase("")) {
@@ -61,6 +58,12 @@
 
         %>
         <%
+//            session = request.getSession(false);
+//            if (session == null) {
+//                response.sendRedirect("index.jsp");
+//                return;
+//            }
+            id=request.getParameter("idAlumno");
             nombre = request.getParameter("txtNombre").trim();
             paterno = request.getParameter("txtPaterno").trim();
             materno = request.getParameter("txtMaterno").trim();
@@ -73,18 +76,19 @@
             String regreso = "&nombre=" + nombre + "&paterno=" + paterno + "&materno=" + materno + "&sexo=" + sexo + "&edad=" + edad
                     + "&usuario=" + usuario + "&fecha=" + fecha;
             String res = validaCampos();
-            
+
             if (res != null) {
-                response.sendRedirect("registroView.jsp?error=Falta llenar los campos: \n" + res + regreso);
+                response.sendRedirect("edirar.jsp?error=Falta llenar los campos: \n" + res + regreso);
                 return;
             }
             if (!clave.equals(cclave)) {
-                response.sendRedirect("registroView.jsp?error=contraseña no coincide" + regreso);
+                response.sendRedirect("editar.jsp?error=contraseña no coincide" + regreso);
                 return;
             }
             Security_MD5 md5 = new Security_MD5();
             String smd5 = md5.encriptarMD5(clave);
             Alumno dto = new Alumno();
+            dto.setIdalumno(Integer.valueOf(id));
             dto.setNombre(nombre);
             dto.setPaterno(paterno);
             dto.setMaterno(materno);
@@ -93,20 +97,15 @@
             dto.setUsuario(usuario);
             dto.setClave(smd5);
             //dto.setFechanac(Date.valueOf(fecha));
-            out.println(dto.toString());
-            
+            //out.println(dto.toString());
+
             AlumnoDAO dao = new AlumnoDAO();
-            dao.create(dto);
-            session = request.getSession(false);
-            if (session == null) {
-                session=request.getSession();
-                session.setAttribute("dto", dto);
-                response.sendRedirect("principal.jsp");
-            } else {
-                response.sendRedirect("principal.jsp?exito=Registro realizado con éxito");
-            }
+            dao.update(dto);
+
+            //session.setAttribute("dto", dto);
+            response.sendRedirect("principal.jsp");
+
 
         %>
-
     </body>
 </html>

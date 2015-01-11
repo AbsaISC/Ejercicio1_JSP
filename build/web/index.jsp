@@ -3,7 +3,7 @@
     Created on : Jan 8, 2015, 12:35:57 AM
     Author     : absalom
 --%>
-
+<%@page errorPage="errorException.jsp?de=index.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

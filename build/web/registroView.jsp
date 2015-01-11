@@ -3,7 +3,7 @@
     Created on : Jan 8, 2015, 11:52:44 PM
     Author     : absalom
 --%>
-
+<%@page errorPage="errorPage.jsp?de=registroView.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -154,28 +154,28 @@ public class AlumnoDAO {
     /**
      * Update a record in Database.
      *
-     * @param bean The Object to be saved.
+     * @param dto The Object to be saved.
      * @param conn JDBC Connection.
      * @exception SQLException if something is wrong.
      */
-    public void update(Alumno bean, Connection conn) throws SQLException, ClassNotFoundException {
+    public void update(Alumno dto) throws SQLException, ClassNotFoundException {
         openConn();
         CallableStatement cs = null;
         try {
             cs = conn.prepareCall(SQL_UPDATE);
-            cs.setString(1, bean.getNombre());
-            cs.setString(2, bean.getPaterno());
-            cs.setString(3, bean.getMaterno());
-            cs.setString(4, bean.getSexo());
-            cs.setInt(5, bean.getEdad());
-            cs.setString(6, bean.getUsuario());
-            cs.setString(7, bean.getClave());
-            if (bean.getFechanac() != null) {
-                cs.setDate(8, new java.sql.Date(bean.getFechanac().getTime()));
+            cs.setString(1, dto.getNombre());
+            cs.setString(2, dto.getPaterno());
+            cs.setString(3, dto.getMaterno());
+            cs.setString(4, dto.getSexo());
+            cs.setInt(5, dto.getEdad());
+            cs.setString(6, dto.getUsuario());
+            cs.setString(7, dto.getClave());
+            if (dto.getFechanac() != null) {
+                cs.setDate(8, new java.sql.Date(dto.getFechanac().getTime()));
             } else {
                 cs.setNull(8, Types.DATE);
             }
-            cs.setInt(9, bean.getIdalumno());
+            cs.setInt(9, dto.getIdalumno());
             cs.executeUpdate();
         } finally {
             close(cs);
@@ -190,7 +190,7 @@ public class AlumnoDAO {
      * @param conn JDBC Connection.
      * @exception SQLException if something is wrong.
      */
-    public void delete(Alumno key, Connection conn) throws SQLException, ClassNotFoundException {
+    public void delete(Alumno key) throws SQLException, ClassNotFoundException {
         openConn();
         CallableStatement cs = null;
         try {

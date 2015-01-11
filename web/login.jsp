@@ -3,6 +3,7 @@
     Created on : Jan 8, 2015, 1:39:27 PM
     Author     : absalom
 --%>
+<%@page errorPage="errorException.jsp?de=login.jsp"%>
 <%@page import="Utility.Security_MD5"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
