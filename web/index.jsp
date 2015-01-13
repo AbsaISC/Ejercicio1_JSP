@@ -96,11 +96,14 @@
 
         <!-- Sign in -->
         <section id="about" class="container content-section text-center">
+            <div id='alert' class='alert-danger'>
+                <p font-size='14' >
             <%
                 if (request.getParameter("err") != null) {
                     out.println(request.getParameter("err"));
                 }
-            %>
+            %></p>
+            </div>
             <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
                 <!--                        <div class="panel panel-default">-->
                 <div class="panel-heading">
@@ -157,10 +160,10 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-xs-6 col-sm-6 col-md-6">
-                                <input type="radio" name="sexo" value="M"> Masculino<br>
+                                <input type="radio" name="txtSexo" value="M"> Masculino<br>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6">
-                                <input type="radio" name="sexo" value="F" checked> Feminino<br>
+                                <input type="radio" name="txtSexo" value="F" checked> Feminino<br>
                             </div>
                         </div>
                         <div class="form-group">
@@ -178,7 +181,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="form-control input-sm" type="text" name="txtFecha" id="txtFecha" placeholder="fecha" required value=<%=(request.getParameter("fecha") != null) ? request.getParameter("fecha") : ""%>>
+                            <input class="form-control input-sm" type="text" name="txtFecha" id="txtFecha" placeholder="fecha"  value=<%=(request.getParameter("fecha") != null) ? request.getParameter("fecha") : ""%>>
                         </div>
                         <div class='row'>
                             <div class="form-group">
@@ -227,6 +230,10 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="grayscale/js/grayscale.js"></script>
+
+        <script>
+            
+        </script>
 
 
     </body>
