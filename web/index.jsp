@@ -167,7 +167,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="form-control input-sm" type="text" name="txtEdad" id="txtEdad" placeholder="Edad" required value=<%=(request.getParameter("edad") != null) ? request.getParameter("edad") : ""%>>
+                            <input class="form-control input-sm" type="numeric"  min="1" max="2" name="txtEdad" id="txtEdad" placeholder="Edad" required value=<%=(request.getParameter("edad") != null) ? request.getParameter("edad") : ""%>>
                         </div>
                         <div class="form-group">
                             <input class="form-control input-sm" type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" required value=<%=(request.getParameter("usuario") != null) ? request.getParameter("usuario") : ""%>>

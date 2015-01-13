@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input class="form-control input-sm" type="text" name="txtEdad" id="txtEdad" placeholder="Edad" required value=<%=(request.getParameter("edad") != null) ? request.getParameter("edad") : ""%>>
+                        <input class="form-control input-sm" type="numeric" name="txtEdad" id="txtEdad" placeholder="Edad" min="1" max="2" required value=<%=(request.getParameter("edad") != null) ? request.getParameter("edad") : ""%>>
                     </div>
                     <div class="form-group">
                         <input class="form-control input-sm" type="text" name="txtUsuario" id="txtUsuario" placeholder="Usuario" required value=<%=(request.getParameter("usuario") != null) ? request.getParameter("usuario") : ""%>>
@@ -84,7 +84,7 @@
                     </div>
                     <div class='row'>
                         <div class="form-group">
-                            <input type="submit" value="Aceptar" class="btn btn-default btn-lg"> 
+                            <input type="submit" value="Aceptar" id="btn-valid" class="btn btn-default btn-lg"> 
                         </div>
                     </div>
                 </form>
@@ -107,7 +107,14 @@
         <script src="grayscale/js/grayscale.js"></script>
 
         <script>
-
+//               $(document).ready(function(){
+//                   $('#btn-valid').click(function(){
+//                       if($('#txtEdad').numeric()){
+//                           alert("El campo edad debe ser número");
+//                           return;
+//                       }
+//                   });
+//               });
         </script>
 
 

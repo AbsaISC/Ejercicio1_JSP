@@ -13,7 +13,7 @@
     </head>
     <body>
         <%
-           // session.removeAttribute("dto");
+            session.removeAttribute("dto");
             session.invalidate();
             response.sendRedirect("index.jsp");
         %>

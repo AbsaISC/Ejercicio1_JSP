@@ -19,7 +19,7 @@
         <title>Registro</title>
     </head>
     <body>
-        <%!            
+        <%!
             String nombre = null;
             String paterno = null;
             String materno = null;
@@ -29,7 +29,7 @@
             String clave = null;
             String cclave = null;
             String fecha = null;
-            
+
             public String validaCampos() {
                 String res = null;
                 if (nombre == null || nombre.equalsIgnoreCase("")) {
@@ -59,6 +59,15 @@
                 return res;
             }
 
+            public boolean isNum(String cadena) {
+                try {
+                    Integer.parseInt(cadena);
+                    return true;
+                } catch (NumberFormatException nfe) {
+                    return false;
+                }
+            }
+
         %>
         <%
             nombre = request.getParameter("txtNombre").trim();
@@ -70,18 +79,29 @@
             clave = request.getParameter("txtClave").trim();
             cclave = request.getParameter("txtCclave").trim();
             fecha = request.getParameter("txtFecha").trim();
-            
+
             String regreso = "&nombre=" + nombre + "&paterno=" + paterno + "&materno=" + materno + "&sexo=" + sexo + "&edad=" + edad
                     + "&usuario=" + usuario + "&fecha=" + fecha;
             String res = validaCampos();
-            
-            if (res != null) {
-                response.sendRedirect("index.jsp?error=Falta llenar los campos: \n" + res + regreso+" #download");
-                return;
-            }
-            if (!clave.equals(cclave)) {
-                response.sendRedirect("index.jsp?error=contraseña no coincide" + regreso+" #download");
-                return;
+
+            if (session.getAttribute("dto") == null) {
+                if (!clave.equals(cclave)) {
+                    response.sendRedirect("index.jsp?error=contraseña no coincide" + regreso + " #download");
+                    return;
+                }
+                if (!isNum(edad)) {
+                    response.sendRedirect("index.jsp?error=edad tiene que se número" + regreso + " #download");
+                    return;
+                }
+            }else{
+                if (!clave.equals(cclave)) {
+                    response.sendRedirect("registroView.jsp?error=contraseña no coincide" + regreso );
+                    return;
+                }
+                if (!isNum(edad)) {
+                    response.sendRedirect("registroView.jsp?error=edad tiene que se número" + regreso);
+                    return;
+                }
             }
             Security_MD5 md5 = new Security_MD5();
             String smd5 = md5.encriptarMD5(clave);
@@ -95,12 +115,12 @@
             dto.setClave(smd5);
             //dto.setFechanac(Date.valueOf(fecha));
             out.println(dto.toString());
-            
+
             AlumnoDAO dao = new AlumnoDAO();
             dao.create(dto);
-            
-            if (session.getAttribute("dto")==null) {
-                session=request.getSession();
+
+            if (session.getAttribute("dto") == null) {
+                session = request.getSession();
                 session.setAttribute("dto", dto);
                 response.sendRedirect("principal.jsp");
             } else {
