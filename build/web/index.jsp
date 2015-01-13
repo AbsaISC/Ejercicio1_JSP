@@ -231,9 +231,6 @@
         <!-- Custom Theme JavaScript -->
         <script src="grayscale/js/grayscale.js"></script>
 
-        <script>
-            
-        </script>
 
 
     </body>
