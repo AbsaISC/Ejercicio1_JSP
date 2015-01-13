@@ -38,7 +38,7 @@
             session.setAttribute("dto", dto);
             response.sendRedirect("principal.jsp");
         }else{
-            response.sendRedirect("index.jsp?err="+"Usuario y clave no encontrados intente de nuevo");
+            response.sendRedirect("index.jsp?err="+"Usuario y clave no encontrados intente de nuevo #about");
         }
         %>
     </body>
