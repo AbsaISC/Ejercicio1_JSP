@@ -56,6 +56,14 @@
                 return res;
             }
 
+            public boolean isNum(String cad){
+                try{
+                    Integer.parseInt(cad);
+                    return true;
+                }catch(NumberFormatException nfe){
+                    return false;
+                }
+            }
         %>
         <%
 //            session = request.getSession(false);
@@ -78,13 +86,20 @@
             String res = validaCampos();
 
             if (res != null) {
-                response.sendRedirect("edirar.jsp?error=Falta llenar los campos: \n" + res + regreso);
+                response.sendRedirect("editar.jsp?error=Falta llenar los campos: \n" + res + regreso);
                 return;
             }
             if (!clave.equals(cclave)) {
                 response.sendRedirect("editar.jsp?error=contraseña no coincide" + regreso);
                 return;
             }
+            
+            if(!isNum(edad)){
+                response.sendRedirect("principal.jsp");
+                return;
+            }
+            
+            
             Security_MD5 md5 = new Security_MD5();
             String smd5 = md5.encriptarMD5(clave);
             Alumno dto = new Alumno();
