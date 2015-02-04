@@ -3,6 +3,7 @@
     Created on : Jan 8, 2015, 12:35:57 AM
     Author     : absalom
 --%>
+<%@page import="Utility.Session"%>
 <%@page errorPage="errorException.jsp?de=index.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,22 +17,17 @@
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" type="text/css" href="frm/bootstrap/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="frm/font-awesome/css/font-awesome.min.css" />
-
-        <script type="text/javascript" src="frm/js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="frm/bootstrap/js/bootstrap.min.js"></script>
-
         <!-- Bootstrap Core CSS -->
         <link href="grayscale/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="grayscale/css/grayscale.css" rel="stylesheet">
 
+        <link href="grayscale/css/grayscale.css" rel="stylesheet">
+
         <!-- Custom Fonts -->
         <link href="grayscale/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
     </head>
     <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
@@ -77,7 +73,7 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <h1 class="brand-heading">Ejercicio 1 con jsp</h1>
-                            <p class="intro-text">Realizar un login empleando jsp's.<br>Modelo 1 de jsp.</p>
+                            <p class="intro-text">Realizar un login empleando jsp's.<br>Modelo MVC jsp.</p>
                             <a href="#about" class="btn btn-circle page-scroll">
                                 <i class="fa fa-angle-double-down animated"></i>
                             </a>
@@ -89,7 +85,8 @@
 
         <!--Codigo jsp isSession y error login-->
         <%
-            if (session.getAttribute("dto") != null) {
+            Session session1=new Session();
+            if (session1.isSession(request)) {
                 response.sendRedirect("principal.jsp");
                 return;
             }%>
@@ -98,11 +95,11 @@
         <section id="about" class="container content-section text-center">
             <div id='alert' class='alert-danger'>
                 <p font-size='14' >
-            <%
-                if (request.getParameter("err") != null) {
-                    out.println(request.getParameter("err"));
-                }
-            %></p>
+                    <%
+                        if (request.getParameter("err") != null) {
+                            out.println(request.getParameter("err"));
+                        }
+                    %></p>
             </div>
             <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
                 <!--                        <div class="panel panel-default">-->
@@ -110,7 +107,8 @@
                     <h3 class="panel-title text-center">Sign in</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="post" name="frmLo" action="login.jsp" role="form">
+                    <form method="post" name="frmLo" action="Controller" role="form">
+                        <input type="text" name="accion" hidden value="signin" >
                         <div class="form-group">
                             <!--                                        <label>Usuario:</label>-->
                             <input type="text" name="txtUsuario" class="form-control input-sm" id="txtUsuario" placeholder="Usuario" value="">
@@ -146,7 +144,9 @@
                             out.println(error);
                         }
                     %>
-                    <form action="registro.jsp" method="post" name="frmReg" role='form'>
+
+                    <form action="Controller" method="post" name="frmReg" role='form'>
+                        <input type="text" name="accion" hidden value="signup" >
                         <div class="form-group">
                             <input type="text" name="txtNombre" id="txtNombre" class="form-control input-sm" placeholder="Nombre"  required value=<%=(request.getParameter("nombre") != null) ? request.getParameter("nombre") : ""%> >
                         </div>
@@ -181,7 +181,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="form-control input-sm" type="text" name="txtFecha" id="txtFecha" placeholder="fecha"  value=<%=(request.getParameter("fecha") != null) ? request.getParameter("fecha") : ""%>>
+                            <input type='text'  class="form-control" required name="txtFecha" placeholder="dd/mm/aaaa" >
                         </div>
                         <div class='row'>
                             <div class="form-group">
@@ -189,8 +189,10 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
+            <div></div>
         </section>
         <!--space-->
         <section id="download" class="content-section text-center">
@@ -207,7 +209,7 @@
         <section id="contact" class="container content-section text-center">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Ejercicio 1 jsp</h2>
+                    <h2>Ejercicio 2 jsp Modelo vista Controlador</h2>
                     <p>Fco. Absalom Araujo Pérez</p>
                     <p><a href="">absalomaraujo@gmail.com</a></p>
                     <p>Profesor: Asunción</p>
@@ -216,21 +218,28 @@
             </div>
         </section>
 
-        <!-- jQuery -->
-        <script src="grayscale/js/jquery.js"></script>
+        <script src="jq/jquery-1.11.1.min.js"></script>
+        <script src="jq/jquery-ui.js"></script>
+        <script src="jq/jquery-ui.min.js"></script>
 
-        <!-- Bootstrap Core JavaScript -->
+
         <script src="grayscale/js/bootstrap.min.js"></script>
 
-        <!-- Plugin JavaScript -->
+        <!--Plugin JavaScript--> 
         <script src="grayscale/js/jquery.easing.min.js"></script>
 
-        <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-
-        <!-- Custom Theme JavaScript -->
         <script src="grayscale/js/grayscale.js"></script>
 
+        <script>
+//            $('#datepicker123').datepicker();
+//            $(function() {
+//                $("#datepicker123").datepicker();
+//            });
+//            $('#sandbox-container div').datepicker({});
+//            $('#sandbox-container .input-group .date').datepicker({
+//                format: "dd/mm/yyyy"
+//            });
+        </script>
 
 
     </body>

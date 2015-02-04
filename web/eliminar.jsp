@@ -3,6 +3,7 @@
     Created on : Jan 11, 2015, 1:38:56 AM
     Author     : absalom
 --%>
+<%@page import="Utility.Session"%>
 <%@page import="DAO.AlumnoDAO"%>
 <%@page import="DAO.AlumnoDAO"%>
 <%@page import="DTO.Alumno"%>
@@ -16,22 +17,22 @@
     </head>
     <body>
         <%
-           session=request.getSession(false);
-           if(session==null){
+           Session session1=new Session();
+           if(!session1.isSession(request)){
                response.sendRedirect("index.jsp");
                return;
            }
                
             String id=request.getParameter("idalumno");
             if(id==null){
-                response.sendRedirect("principal.jsp?exito=elemento no encontrado");
+                response.sendRedirect("Controller?accion=invDelete");
                 return;
             }
             Alumno dto2=new Alumno();
             dto2.setIdalumno(Integer.valueOf(id));
             AlumnoDAO dao=new AlumnoDAO();
             dao.delete(dto2);
-            response.sendRedirect("principal.jsp?exito=Eliminado correctamente");
+            response.sendRedirect("Controller?accion=valDelete");
         %>
     </body>
 </html>

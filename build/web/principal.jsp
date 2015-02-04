@@ -4,6 +4,7 @@
     Author     : absalom
 --%>
 
+<%@page import="Utility.Session"%>
 <%@page import="DAO.AlumnoDAO"%>
 <%@page import="DTO.Alumno"%>
 <%@page import="java.util.List"%>
@@ -39,8 +40,9 @@
     </head>
     <body>
         <%
-            Alumno a = (Alumno) session.getAttribute("dto");
-            if (a == null) {
+            Session session1=new Session();
+            
+            if (!session1.isSession(request)) {
                 response.sendRedirect("index.jsp?err=Necesita inicio de sesión");
                 return;
             }
@@ -60,7 +62,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand page-scroll" href="#page-top">
-                        <i class="fa fa-play-circle"></i>  <span class="light"> <%=a.getNombre()%></span> 
+                        <i class="fa fa-play-circle"></i>  <span class="light"> <%=((Alumno)session1.getObjeto(request)).getNombre() %></span> 
                     </a>
                 </div>
 
@@ -123,8 +125,8 @@
                             <td><%=alumno.getUsuario()%></td>
                             <td><%=alumno.getClave()%></td>
                             <td><%= alumno.getIdalumno()%></td>
-                            <td><input type="submit" value=" eliminar " name="eliminar" class="btn btn-default btn-color-red" formaction="eliminar.jsp"></td>
-                            <td><input type="submit" value="Editar" name="editar" class="btn btn-default btn-color-yellow" formaction="editar.jsp" ></td>
+                            <td><input type="submit" value=" Eliminar " name="eliminar" class="btn btn-default btn-color-red" formaction="Controller?accion=delete"></td>
+                            <td><input type="submit" value="Editar" name="editar" class="btn btn-default btn-color-yellow" formaction="Controller?accion=edit" ></td>
                             </tr>
                         </form>
                         </tbody>

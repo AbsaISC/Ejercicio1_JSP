@@ -118,7 +118,7 @@
             dao.update(dto);
 
             //session.setAttribute("dto", dto);
-            response.sendRedirect("principal.jsp");
+            response.sendRedirect("Controller?accion=hecho");
 
 
         %>

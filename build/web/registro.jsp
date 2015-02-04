@@ -3,6 +3,8 @@
     Created on : Jan 9, 2015, 12:14:17 AM
     Author     : absalom
 --%>
+<%@page import="Utility.Session"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page errorPage="errorException.jsp?de=registro.jsp" %>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
@@ -93,9 +95,9 @@
                     response.sendRedirect("index.jsp?error=edad tiene que se número" + regreso + " #download");
                     return;
                 }
-            }else{
+            } else {
                 if (!clave.equals(cclave)) {
-                    response.sendRedirect("registroView.jsp?error=contraseña no coincide" + regreso );
+                    response.sendRedirect("registroView.jsp?error=contraseña no coincide" + regreso);
                     return;
                 }
                 if (!isNum(edad)) {
@@ -103,6 +105,8 @@
                     return;
                 }
             }
+
+
             Security_MD5 md5 = new Security_MD5();
             String smd5 = md5.encriptarMD5(clave);
             Alumno dto = new Alumno();
@@ -113,18 +117,15 @@
             dto.setEdad(Integer.valueOf(edad));
             dto.setUsuario(usuario);
             dto.setClave(smd5);
-            //dto.setFechanac(Date.valueOf(fecha));
-            out.println(dto.toString());
-
             AlumnoDAO dao = new AlumnoDAO();
             dao.create(dto);
-
-            if (session.getAttribute("dto") == null) {
-                session = request.getSession();
-                session.setAttribute("dto", dto);
-                response.sendRedirect("principal.jsp");
+            Session session1=new Session();
+            
+            if (!session1.isSession(request)) {
+                session1.open(request, response, dto, usuario, smd5);
+                response.sendRedirect("Controller?accion=iniReg");
             } else {
-                response.sendRedirect("principal.jsp?exito=Registro realizado con éxito");
+                response.sendRedirect("Controller?accion=Reg");
             }
 
         %>

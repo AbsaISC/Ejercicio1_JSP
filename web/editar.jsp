@@ -43,7 +43,7 @@
             }
             String id=request.getParameter("idalumno");
             if(id==null){
-                response.sendRedirect("principal.jsp?exito=elemento no encontrado");
+                response.sendRedirect("Controller?accion=invEdit");
                 return;
             }
             Alumno dto2=new Alumno();
@@ -58,7 +58,8 @@
                 <h3 class="panel-title text-center">Editar</h3>
             </div>
             <div class="panel-body">
-                <form action="actualiza.jsp" method="post" name="frmReg" role="form">
+                <form action="Controller" method="post" name="frmReg" role="form">
+                    <input type="text" name="accion" hidden="true"  value="update" >
                     <input type="text" name="idAlumno" hidden="true" id="idAlumno" value=<%= dto.getIdalumno() %> />
                     <div class="form-group">
                         <input type="text" name="txtNombre" id="txtNombre" class="form-control input-sm" placeholder="Nombre"  required value=<%=dto.getNombre() %> >
